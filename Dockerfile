@@ -3,9 +3,14 @@ FROM ubuntu:latest AS builder
 
 RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 
-# Copia os arquivos do projeto para o contêiner
+# Cria um diretório de trabalho
 WORKDIR /app
+
+# Copia os arquivos do projeto para o contêiner
 COPY . .
+
+# Dá permissões de execução ao Maven Wrapper
+RUN chmod +x mvnw
 
 # Constrói o projeto com o Maven Wrapper
 RUN ./mvnw clean install
