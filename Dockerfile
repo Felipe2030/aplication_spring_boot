@@ -1,16 +1,22 @@
-FROM ubuntu:latest AS build
+# Etapa de construção
+FROM ubuntu:latest AS builder
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+RUN apt-get update && apt-get install -y openjdk-17-jdk maven
+
+# Copia os arquivos do projeto para o contêiner
+WORKDIR /app
 COPY . .
 
-RUN apt-get install maven -y
-RUN mvnw clean install 
+# Constrói o projeto com o Maven Wrapper
+RUN ./mvnw clean install
 
+# Etapa de execução
 FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/deploy_render-1.0.0.jar app.jar
+# Copia o JAR construído na etapa anterior para o contêiner
+COPY --from=builder /app/target/deploy_render-1.0.0.jar /app.jar
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Comando de execução
+ENTRYPOINT ["java", "-jar", "/app.jar"]
