@@ -20,6 +20,10 @@ public class Turma {
     private Professor professor;
 
     private boolean ativo;
+
+    public Turma(Integer id) {
+        this.id = (long) id;
+    }
     
     public Turma(String descricao, Professor professor, boolean ativo) {
         this.descricao = descricao;

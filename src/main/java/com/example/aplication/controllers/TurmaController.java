@@ -18,49 +18,52 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.aplication.entities.Turma;
 import com.example.aplication.services.TurmaService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @CrossOrigin
+@Tag(name = "Turma", description = "Operações relacionadas a Turma")
 @RequestMapping("/api/turmas")
 public class TurmaController {
 
-    private final TurmaService TurmaService;
+    private final TurmaService turmaService;
 
     @Autowired
-    public TurmaController(TurmaService TurmaService) {
-        this.TurmaService = TurmaService;
+    public TurmaController(TurmaService turmaService) {
+        this.turmaService = turmaService;
     }
 
     @PostMapping
-    public ResponseEntity<Turma> criarTurma(@RequestBody Turma Turma) {
-        Turma newTurma = TurmaService.createTurma(Turma);
+    public ResponseEntity<Turma> criarTurma(@RequestBody Turma turma) {
+        Turma newTurma = turmaService.createTurma(turma);
         return new ResponseEntity<>(newTurma, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Turma>> listTurmaes() {
-        List<Turma> Turmaes = TurmaService.listAllTurmas();
-        return new ResponseEntity<>(Turmaes, HttpStatus.OK);
+        List<Turma> turma = turmaService.listAllTurmas();
+        return new ResponseEntity<>(turma, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Turma> buscarTurmaPorId(@PathVariable Long id) {
-        Turma Turma = TurmaService.getTurmaById(id);
-        return Turma != null ?
-               new ResponseEntity<>(Turma, HttpStatus.OK) :
+        Turma turma = turmaService.getTurmaById(id);
+        return turma != null ?
+               new ResponseEntity<>(turma, HttpStatus.OK) :
                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Turma> atualizarTurma(@PathVariable Long id, @RequestBody Turma Turma) {
-        Turma TurmaAtualizado = TurmaService.updateTurma(id, Turma);
-        return TurmaAtualizado != null ?
-               new ResponseEntity<>(TurmaAtualizado, HttpStatus.OK) :
+    public ResponseEntity<Turma> atualizarTurma(@PathVariable Long id, @RequestBody Turma turma) {
+        Turma turmaAtualizado = turmaService.updateTurma(id, turma);
+        return turmaAtualizado != null ?
+               new ResponseEntity<>(turmaAtualizado, HttpStatus.OK) :
                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirTurma(@PathVariable Long id) {
-        TurmaService.deleteTurma(id);
+        turmaService.deleteTurma(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

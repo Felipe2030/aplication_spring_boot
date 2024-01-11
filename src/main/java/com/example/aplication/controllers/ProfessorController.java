@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.aplication.entities.Aluno;
 import com.example.aplication.entities.Professor;
 import com.example.aplication.services.ProfessorService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @CrossOrigin
+@Tag(name = "Professor", description = "Operações relacionadas a professor")
 @RequestMapping("/api/professores")
 public class ProfessorController {
 
@@ -28,6 +33,11 @@ public class ProfessorController {
     @Autowired
     public ProfessorController(ProfessorService professorService) {
         this.professorService = professorService;
+    }
+
+    @GetMapping("/nome")
+    public List<Professor> getProfessorByNome(@RequestParam String nome) {
+        return professorService.getProfessorByNome(nome);
     }
 
     @PostMapping

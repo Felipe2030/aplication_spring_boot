@@ -17,6 +17,10 @@ public class ProfessorService {
         this.professorRepository = professorRepository;
     }
 
+    public List<Professor> getProfessorByNome(String nome) {
+        return professorRepository.findByNomeContaining(nome);
+    }
+
     public Professor createProfessor(Professor professor) {
         return professorRepository.save(professor);
     }
