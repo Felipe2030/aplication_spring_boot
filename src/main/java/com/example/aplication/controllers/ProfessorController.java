@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.aplication.entities.Aluno;
 import com.example.aplication.entities.Professor;
 import com.example.aplication.services.ProfessorService;
 
