@@ -13,7 +13,7 @@ COPY . .
 RUN chmod +x mvnw
 
 # Constrói o projeto com o Maven Wrapper
-RUN ./mvnw clean install
+RUN ./mvnw spring-boot:run
 
 # Etapa de execução
 FROM openjdk:17-jdk-slim
